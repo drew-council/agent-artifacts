@@ -27,7 +27,7 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
     mkdir -p "$out/share/agent-artifacts" "$out/bin"
-    cp -R index.ts src templates skills vendor "$out/share/agent-artifacts/"
+    cp -R index.ts src templates resources vendor "$out/share/agent-artifacts/"
     makeWrapper ${bun}/bin/bun "$out/bin/agent-artifacts" \
       --add-flags "$out/share/agent-artifacts/index.ts" \
       --set-default AGENT_ARTIFACTS_TEMPLATE "$out/share/agent-artifacts/templates/react-shadcn"

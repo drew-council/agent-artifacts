@@ -35,11 +35,6 @@ in
       type = lib.types.ints.between 100 60000;
       default = 1000;
     };
-    installPiSkill = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Expose the artifact skill in Pi's user skill directory.";
-    };
   };
   config = lib.mkIf cfg.enable {
     home.packages = [
@@ -49,8 +44,6 @@ in
     xdg.configFile."agent-artifacts/config.json".text = builtins.toJSON {
       inherit (cfg) dataDir port pollIntervalMs;
     };
-    home.file.".pi/agent/skills/html-artifacts".source =
-      lib.mkIf cfg.installPiSkill "${cfg.package}/share/agent-artifacts/skills/html-artifacts";
     systemd.user.services.agent-artifacts = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
       Unit = {
         Description = "Local agent artifact host";

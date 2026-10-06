@@ -6,14 +6,21 @@ Based on [Anthropic's web-artifacts-builder](https://github.com/anthropics/skill
 
 ## Pi installation
 
-Install the skill independently of Home Manager activation:
+Keep a small, Git-managed shim in your Pi configuration repository at `agent/skills/html-artifacts/SKILL.md`:
 
-```sh
-pi install git:github.com/drew-council/agent-artifacts
+```markdown
+---
+name: html-artifacts
+description: Create local interactive HTML artifacts using React, TypeScript, Tailwind and shadcn/ui.
+disable-model-invocation: true
+---
+
+Run `agent-artifacts skill` and follow its instructions.
 ```
 
-Run `/reload` in Pi. This exposes `/skill:html-artifacts` and the agent-facing CLI guidance.
-When Pi manages the skill, set `services.agent-artifacts.installPiSkill = false` in Home Manager to avoid duplicate discovery. Home Manager still installs the CLI and configures the background host.
+Run `/reload` in Pi, then invoke `/skill:html-artifacts` manually.
+The CLI prints the full instructions from `resources/skill.md`.
+Home Manager installs the CLI and host only; it never writes to `~/.pi`.
 
 ## Agent workflow
 
@@ -63,6 +70,7 @@ No upload occurs. Opening an export requires no package installation, server, in
 | `url [id]` | Print the gallery/artifact URL |
 | `export <id> --output <file.zip>` | Create an archive without overwriting an existing file |
 | `serve` | Run the loopback host and inbox ingestion |
+| `skill` | Print the full agent workflow instructions |
 
 Commands accept `--json`. Repeated submissions create independent snapshots and new IDs; this is not a live workspace mirror or a version-control system.
 
@@ -85,14 +93,12 @@ services.agent-artifacts = {
   enable = true;
   port = 41780;
   # dataDir defaults to the user's XDG data home / agent-artifacts.
-  # installPiSkill defaults to true.
 };
 ```
 
 The same module creates:
 
 - A configured `agent-artifacts` command and Bun in the user's environment.
-- The Pi skill at `~/.pi/agent/skills/html-artifacts/`.
 - A systemd user service on Linux.
 - A launchd agent on macOS, with automatic restart and local logs.
 - Private storage and a JSON configuration file.

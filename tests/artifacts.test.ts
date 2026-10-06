@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { mkdir, rename, rm, symlink } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import type { Config } from "../src/config.ts";
 import { assertId, digest, scanSource, sourceHash } from "../src/files.ts";
 import { OFFLINE_CSP, offlineDocument } from "../src/offline.ts";
@@ -229,6 +230,31 @@ test("scaffolding never overwrites existing work", async () => {
 	expect(await Bun.file(join(target, "bun.lock")).exists()).toBe(true);
 	await expect(initProject(target, "Replacement")).rejects.toThrow();
 	expect(await Bun.file(join(target, "src", "App.tsx")).exists()).toBe(true);
+});
+test("skill command works without host configuration and prints packaged guidance", async () => {
+	const cli = fileURLToPath(new URL("../index.ts", import.meta.url));
+	const expected = await Bun.file(
+		new URL("../resources/skill.md", import.meta.url),
+	).text();
+	const process = Bun.spawn(["bun", cli, "skill", "--json"], {
+		env: {
+			...Bun.env,
+			AGENT_ARTIFACTS_CONFIG: "/nonexistent/artifact-config.json",
+		},
+		stdout: "pipe",
+		stderr: "pipe",
+	});
+	const output = await new Response(process.stdout).text();
+	expect(await process.exited).toBe(0);
+	expect(JSON.parse(output).skill).toBe(expected);
+});
+test("Home Manager module has no Pi filesystem integration", async () => {
+	const module = await Bun.file(
+		new URL("../nix/home-manager.nix", import.meta.url),
+	).text();
+	expect(module).not.toContain(".pi");
+	expect(module).not.toContain("home.file");
+	expect(module).not.toContain("installPiSkill");
 });
 test("ZIP and IDs reject traversal", () => {
 	expect(() => assertId("../escape")).toThrow();

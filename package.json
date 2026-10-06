@@ -3,17 +3,6 @@
   "version": "0.1.0",
   "type": "module",
   "private": true,
-  "keywords": [
-    "pi-package"
-  ],
-  "pi": {
-    "extensions": [],
-    "skills": [
-      "./skills"
-    ],
-    "prompts": [],
-    "themes": []
-  },
   "bin": {
     "agent-artifacts": "index.ts"
   },

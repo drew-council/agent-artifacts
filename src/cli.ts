@@ -1,4 +1,5 @@
 import { basename, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { baseUrl, loadConfig } from "./config.ts";
 import { assertId } from "./files.ts";
 import { buildProject, initProject } from "./project.ts";
@@ -15,6 +16,7 @@ const HELP = `agent-artifacts — local React/TypeScript/shadcn artifacts
   export <id> --output <file.zip>      Export HTML + editable source
   url [id]                            Print gallery or artifact URL
   serve                               Run inbox ingestion and localhost host
+  skill                               Print the full agent workflow instructions
 All operations accept --json. Configure via AGENT_ARTIFACTS_CONFIG,
 AGENT_ARTIFACTS_HOME, or AGENT_ARTIFACTS_PORT. No uploads or telemetry.
 `;
@@ -58,6 +60,7 @@ export async function main(args: string[]): Promise<void> {
 		export: ["--output"],
 		url: [],
 		serve: [],
+		skill: [],
 	};
 	if (!Object.hasOwn(allowed, command))
 		throw new Error(`Unknown command: ${command}`);
@@ -71,11 +74,19 @@ export async function main(args: string[]): Promise<void> {
 		!target
 	)
 		throw new Error(`${command} requires a path or artifact ID`);
-	if (["serve", "list"].includes(command) && target)
+	if (["serve", "list", "skill"].includes(command) && target)
 		throw new Error(`${command} takes no argument`);
 	const json = flags.has("--json");
 	const emit = (value: unknown, text: string) =>
 		console.log(json ? JSON.stringify(value) : text);
+	if (command === "skill") {
+		const path = fileURLToPath(
+			new URL("../resources/skill.md", import.meta.url),
+		);
+		const skill = await Bun.file(path).text();
+		emit({ skill }, skill);
+		return;
+	}
 	if (command === "init") {
 		const path = await initProject(
 			target as string,
