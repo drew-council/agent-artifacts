@@ -55,27 +55,8 @@
         formatter = treefmtEval.config.build.wrapper;
         checks = {
           formatting = treefmtEval.config.build.check self;
-          unit =
-            pkgs.runCommand "agent-artifacts-tests"
-              {
-                nativeBuildInputs = [
-                  pkgs.bun
-                  pkgs.python3
-                ];
-              }
-              ''
-                export TEST_TMPDIR="$TMPDIR"
-                bun test ${self}/tests
-                touch "$out"
-              '';
-          cli =
-            pkgs.runCommand "agent-artifacts-cli"
-              {
-                nativeBuildInputs = [ self.packages.${system}.default ];
-              }
-              ''
-                agent-artifacts --help > "$out"
-              '';
+          # Runs the unit tests and the packaged CLI --help in the package build.
+          default = self.packages.${system}.default;
         };
       }
     );
