@@ -31,11 +31,13 @@
     };
     biome = {
       enable = true;
+      # Preserve upstream component APIs; the entire starter is type-checked separately.
+      excludes = [ "templates/**" ];
     };
   };
 
   settings = {
-    excludes = [ ];
+    excludes = [ "vendor/**" ];
     formatter = { };
   };
 }

@@ -1,12 +1,19 @@
 {
   "name": "agent-artifacts",
-  "module": "index.ts",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
+  "bin": {
+    "agent-artifacts": "index.ts"
   },
-  "peerDependencies": {
-    "typescript": "^7"
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "check": "biome check src tests index.ts && tsc --noEmit && bun test"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.2",
+    "typescript": "7.0.2",
+    "@biomejs/biome": "2.5.15"
   }
 }

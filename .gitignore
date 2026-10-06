@@ -3,3 +3,6 @@
 
 # TypeScript
 node_modules/
+dist/
+result
+result-*
