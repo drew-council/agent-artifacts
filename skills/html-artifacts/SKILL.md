@@ -6,6 +6,7 @@ description: Create local interactive HTML artifacts using React, TypeScript, Ta
 # Local HTML artifacts
 
 Use the installed `agent-artifacts` CLI. Run `agent-artifacts --help` to inspect commands.
+If Home Manager has not installed the command yet, use `nix run github:drew-council/agent-artifacts -- <command> <arguments>` instead. This provides the same CLI; it does not start the background service. Submissions stay queued until that service is activated.
 This skill adapts Anthropic's web-artifacts-builder, but publication and sharing are entirely local.
 
 ## Workflow

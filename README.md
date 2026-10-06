@@ -4,6 +4,17 @@ Local-first HTML deliverables for coding agents: **React + TypeScript + Tailwind
 
 Based on [Anthropic's web-artifacts-builder](https://github.com/anthropics/skills/tree/main/skills/web-artifacts-builder), not a remote artifact service. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the pinned upstream source and licenses.
 
+## Pi installation
+
+Install the skill independently of Home Manager activation:
+
+```sh
+pi install git:github.com/drew-council/agent-artifacts
+```
+
+Run `/reload` in Pi. This exposes `/skill:html-artifacts` and the agent-facing CLI guidance.
+When Pi manages the skill, set `services.agent-artifacts.installPiSkill = false` in Home Manager to avoid duplicate discovery. Home Manager still installs the CLI and configures the background host.
+
 ## Agent workflow
 
 ```sh
