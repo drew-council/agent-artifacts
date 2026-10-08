@@ -29,9 +29,11 @@ Do not launch another host if Home Manager manages it. If submission stays queue
 - React 18, TypeScript, Vite, Tailwind 3 and 40+ shadcn/ui components are preconfigured and pinned.
 - Import components from `@/components/ui/<component>`.
 - Use `ArtifactLayout`, `Metric` and `Note` from `@/components/artifact-layout` for a consistent baseline.
+- The theme is Catppuccin Mocha with a mauve primary. Prefer semantic tokens; use the `ctp-*` palette (e.g. `text-ctp-green`) for charts and status colors.
+- For code, use `CodeBlock` from `@/components/code-block`; see that file for supported languages.
 - Keep the shared spacing, typography, colors and CSS variables. Extend thoughtfully rather than inventing a different palette for every report.
 - Use meaningful headings, keyboard-operable controls, labelled inputs, visible focus and responsive layouts.
-- Avoid excessive centered layouts, purple gradients, uniform card grids for all content, decorative emoji headers and gratuitous animation.
+- Avoid excessive centered layouts, gradients, uniform card grids for all content, decorative emoji headers and gratuitous animation.
 - Reports should answer the user's question first. Interactive controls should clarify the content, not obscure it.
 - Prefer the existing component library over hand-built dialog/menu accessibility.
 

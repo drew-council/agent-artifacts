@@ -1,8 +1,47 @@
+const { fontFamily } = require("tailwindcss/defaultTheme");
+
+const catppuccin = [
+	"rosewater",
+	"flamingo",
+	"pink",
+	"mauve",
+	"red",
+	"maroon",
+	"peach",
+	"yellow",
+	"green",
+	"teal",
+	"sky",
+	"sapphire",
+	"blue",
+	"lavender",
+	"text",
+	"subtext1",
+	"subtext0",
+	"overlay2",
+	"overlay1",
+	"overlay0",
+	"surface2",
+	"surface1",
+	"surface0",
+	"base",
+	"mantle",
+	"crust",
+];
+
 module.exports = {
 	darkMode: ["class"],
 	content: ["./index.html", "./src/**/*.{ts,tsx}"],
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ['"Noto Sans Variable"', '"Noto Sans"', ...fontFamily.sans],
+				mono: [
+					'"JetBrains Mono Variable"',
+					'"JetBrains Mono"',
+					...fontFamily.mono,
+				],
+			},
 			colors: Object.fromEntries(
 				["background", "foreground", "border", "input", "ring"]
 					.map((name) => [name, `hsl(var(--${name}))`])
@@ -22,7 +61,15 @@ module.exports = {
 								foreground: `hsl(var(--${name}-foreground))`,
 							},
 						]),
-					),
+					)
+					.concat([
+						[
+							"ctp",
+							Object.fromEntries(
+								catppuccin.map((name) => [name, `hsl(var(--ctp-${name}))`]),
+							),
+						],
+					]),
 			),
 			borderRadius: {
 				lg: "var(--radius)",

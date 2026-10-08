@@ -2,54 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Latin subsets only, embedded by Vite; other scripts fall back to installed fonts. */
+@font-face {
+  font-family: "Noto Sans Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("@fontsource-variable/noto-sans/files/noto-sans-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Noto Sans Variable";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("@fontsource-variable/noto-sans/files/noto-sans-latin-wght-italic.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "JetBrains Mono Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url("@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "JetBrains Mono Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url("@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 @layer base {
+  /* Catppuccin Mocha. The full palette is available as Tailwind `ctp-*` colors. */
   :root {
-    color-scheme: light;
-    --background: 45 20% 98%;
-    --foreground: 175 20% 12%;
-    --card: 0 0% 100%;
-    --card-foreground: 175 20% 12%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 175 20% 12%;
-    --primary: 164 60% 25%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 160 12% 94%;
-    --secondary-foreground: 175 20% 12%;
-    --muted: 160 12% 94%;
-    --muted-foreground: 175 10% 38%;
-    --accent: 160 18% 92%;
-    --accent-foreground: 175 20% 12%;
-    --destructive: 0 72% 45%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 160 12% 86%;
-    --input: 160 12% 86%;
-    --ring: 164 60% 25%;
+    color-scheme: dark;
+    --ctp-rosewater: 10 56% 91%;
+    --ctp-flamingo: 0 59% 88%;
+    --ctp-pink: 316 72% 86%;
+    --ctp-mauve: 267 84% 81%;
+    --ctp-red: 343 81% 75%;
+    --ctp-maroon: 350 65% 77%;
+    --ctp-peach: 23 92% 75%;
+    --ctp-yellow: 41 86% 83%;
+    --ctp-green: 115 54% 76%;
+    --ctp-teal: 170 57% 73%;
+    --ctp-sky: 189 71% 73%;
+    --ctp-sapphire: 199 76% 69%;
+    --ctp-blue: 217 92% 76%;
+    --ctp-lavender: 232 97% 85%;
+    --ctp-text: 226 64% 88%;
+    --ctp-subtext1: 227 35% 80%;
+    --ctp-subtext0: 228 24% 72%;
+    --ctp-overlay2: 228 17% 64%;
+    --ctp-overlay1: 230 13% 55%;
+    --ctp-overlay0: 231 11% 47%;
+    --ctp-surface2: 233 12% 39%;
+    --ctp-surface1: 234 13% 31%;
+    --ctp-surface0: 237 16% 23%;
+    --ctp-base: 240 21% 15%;
+    --ctp-mantle: 240 21% 12%;
+    --ctp-crust: 240 23% 9%;
+
+    --background: var(--ctp-base);
+    --foreground: var(--ctp-text);
+    --card: var(--ctp-mantle);
+    --card-foreground: var(--ctp-text);
+    --popover: var(--ctp-mantle);
+    --popover-foreground: var(--ctp-text);
+    --primary: var(--ctp-mauve);
+    --primary-foreground: var(--ctp-crust);
+    --secondary: var(--ctp-surface0);
+    --secondary-foreground: var(--ctp-text);
+    --muted: var(--ctp-surface0);
+    --muted-foreground: var(--ctp-subtext0);
+    --accent: var(--ctp-surface1);
+    --accent-foreground: var(--ctp-text);
+    --destructive: var(--ctp-red);
+    --destructive-foreground: var(--ctp-crust);
+    --border: var(--ctp-surface1);
+    --input: var(--ctp-surface1);
+    --ring: var(--ctp-mauve);
     --radius: 0.5rem;
   }
-  .dark {
-    color-scheme: dark;
-    --background: 175 20% 9%;
-    --foreground: 160 15% 94%;
-    --card: 164 14% 13%;
-    --card-foreground: 160 15% 94%;
-    --popover: 164 14% 13%;
-    --popover-foreground: 160 15% 94%;
-    --primary: 160 52% 72%;
-    --primary-foreground: 175 20% 9%;
-    --secondary: 164 14% 19%;
-    --secondary-foreground: 160 15% 94%;
-    --muted: 164 14% 19%;
-    --muted-foreground: 160 12% 70%;
-    --accent: 164 14% 22%;
-    --accent-foreground: 160 15% 94%;
-    --destructive: 0 62% 45%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 164 14% 24%;
-    --input: 164 14% 24%;
-    --ring: 160 52% 72%;
-  }
   * { @apply border-border; }
-  body { @apply bg-background text-foreground; font-family: system-ui, sans-serif; font-size: 17px; }
+  body { @apply bg-background font-sans text-foreground; font-size: 17px; }
+  ::selection { background-color: hsl(var(--ctp-overlay2) / 0.3); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
